@@ -19,7 +19,7 @@ Future<void> main() async {
   );
   await FirebaseAuth.instance.setLanguageCode("es");
   // Obtiene una instancia de la base de datos
-  final database = FirebaseDatabase.instance.reference();
+  /*final database = FirebaseDatabase.instance.reference();
 
       // Define el dato que se va a agregar a la base de datos
       Map<String, dynamic> data = {
@@ -35,7 +35,7 @@ Future<void> main() async {
         print('Dato agregado a Firebase Realtime Database');
       } catch (e) {
         print('Error al agregar dato a Firebase Realtime Database: $e');
-      }
+      }*/
   runApp(const MyApp());
 }
 
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           errorBorder: defaultInputBorder,
         ),
       ),
-      home: const EntryPoint(),
+      home: const AuthPage(),
     );
   }
 }

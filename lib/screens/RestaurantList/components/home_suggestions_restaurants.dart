@@ -26,6 +26,7 @@ class RestaurantProducts extends StatelessWidget {
                 List<Map<dynamic, dynamic>> foodsList = [];
                 Map<dynamic, dynamic> foods = snapshot.data!.snapshot.value;
                 foods.forEach((key, value) {
+                  print(value);
                   foodsList.add(value);
                 });
 
@@ -39,6 +40,8 @@ class RestaurantProducts extends StatelessWidget {
                       imageUrl: food['imageUrl'],
                       cal: food['calificacion'],
                       dire: food['direccion'],
+                      hop: food['hopen'],
+                      hcl: food['hclose']
                     ),
                   );
                 }

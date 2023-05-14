@@ -14,6 +14,8 @@ class ItemTileVertical extends StatelessWidget {
     required this.description,
     required this.cal,
     required this.dire,
+    required this.hop,
+    required this.hcl,
   }) : super(key: key);
 
   final String foodName;
@@ -21,6 +23,8 @@ class ItemTileVertical extends StatelessWidget {
   final String description;
   final String cal;
   final String dire;
+  final String hop;
+  final String hcl;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,9 @@ class ItemTileVertical extends StatelessWidget {
                   imageUrl: imageUrl,
                   descripcion: description,
                   direccion: dire,
-                  calificacion: cal),
+                  calificacion: cal,
+                  hope: hop,
+                  hclo: hcl),
             ),
           );
         },

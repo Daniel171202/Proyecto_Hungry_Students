@@ -47,12 +47,13 @@ class _FoodPageState extends State<FoodPage> {
       "name": foodController.text,
       "precio": precioController.text,
       "imageUrl": urlController.text,
-      "descripcion": descController.text,
+      "description": descController.text,
+      "restaurant": user.displayName,
     };
     final llave = user.uid;
     // Agrega el dato a la base de datos
     try {
-      await database.child('Comidas/${user.uid}').push().set(data);
+      await database.child('Products_Restaurants').push().set(data);
       log('Comida agregada a Firebase Realtime Database');
     } catch (e) {
       log('Error al agregar restaurante a Firebase Realtime Database: $e');

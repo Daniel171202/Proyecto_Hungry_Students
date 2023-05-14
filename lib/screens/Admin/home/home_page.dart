@@ -31,6 +31,8 @@ class _HomePageState extends State<HomePage> {
   late String direccion = "";
   late String urlimagen = "";
   late String correo = "";
+  late String hope = "";
+  late String hclo = "";
 
   @override
   void initState() {
@@ -49,6 +51,8 @@ class _HomePageState extends State<HomePage> {
         direccion = snapshot.child('direccion').value.toString();
         urlimagen = snapshot.child('imageUrl').value.toString();
         correo = snapshot.child('correo').value.toString();
+        hope = snapshot.child('hopen').value.toString();
+        hclo = snapshot.child('hclose').value.toString();
       });
     } else {
       setState(() {
@@ -56,12 +60,15 @@ class _HomePageState extends State<HomePage> {
         direccion = "Añade direcion";
         urlimagen = "Añade tu enlace";
         correo = "Añade correo";
+        hope = "Añade hora de apertura";
+        hclo = "Añade hora de cierre";
       });
     }
   }
 
   void actualizarDatos(String nameController, String direcController,
-      String descController, String urlController, String correoController) {
+      String descController, String urlController, String correoController,
+      String hopenController, String hcloseController) {
     // Obtén una referencia a la entidad que deseas actualizar
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref =
@@ -74,6 +81,8 @@ class _HomePageState extends State<HomePage> {
       'direccion': direcController,
       'imageUrl': urlController,
       'correo': correoController,
+      'hopen': hopenController,
+      'hclose': hcloseController,
     };
 
     // Actualiza solo los atributos especificados en el mapa
@@ -98,6 +107,10 @@ class _HomePageState extends State<HomePage> {
         TextEditingController(text: urlimagen);
     TextEditingController correoController =
         TextEditingController(text: correo);
+    TextEditingController hopenController =
+        TextEditingController(text: hope);
+    TextEditingController hcloseController =
+        TextEditingController(text: hclo);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -241,6 +254,56 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 10),
+          const Text(
+            "Hora de apertura:",
+            style: TextStyle(
+              color: Colors.black54,
+            ),
+          ),
+          TextFormField(
+            controller: hopenController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "";
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              prefixIcon: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Icon(
+                  Icons.timelapse_outlined,
+                  color: Color.fromRGBO(255, 64, 64, 1),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Hora de cierre:",
+            style: TextStyle(
+              color: Colors.black54,
+            ),
+          ),
+          TextFormField(
+            controller: hcloseController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "";
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              prefixIcon: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Icon(
+                  Icons.timelapse_outlined,
+                  color: Color.fromRGBO(255, 64, 64, 1),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           ElevatedButton.icon(
             onPressed: () {
               actualizarDatos(
@@ -248,7 +311,9 @@ class _HomePageState extends State<HomePage> {
                   direcController.text,
                   descController.text,
                   urlController.text,
-                  correoController.text);
+                  correoController.text,
+                  hopenController.text,
+                  hcloseController.text);
 
               showDialog(
                 context: context,

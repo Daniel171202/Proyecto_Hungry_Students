@@ -25,7 +25,7 @@ class Lista extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               HomeGreetings(),
-              SearchBox(),
+              //SearchBox(),
               SizedBox(height: 10),
               RestaurantProducts(),
               SizedBox(height: 70),

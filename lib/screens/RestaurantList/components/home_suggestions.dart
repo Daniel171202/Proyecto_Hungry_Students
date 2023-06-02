@@ -55,8 +55,7 @@ class HomeSuggestionSection extends StatelessWidget {
                   }
 
                   List<Map<dynamic, dynamic>> foodsList = [];
-                  Map<dynamic, dynamic> foods =
-                      snapshot.data!.snapshot.value;
+                  Map<dynamic, dynamic> foods = snapshot.data!.snapshot.value;
                   foods.forEach((key, value) {
                     foodsList.add(value);
                   });

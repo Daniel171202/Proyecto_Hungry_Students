@@ -8,42 +8,59 @@ import 'components/food_description.dart';
 import 'components/food_image_slider.dart';
 import 'components/food_meta_data.dart';
 
-class FoodDetailsPage extends StatelessWidget {
-  const FoodDetailsPage({Key? key}) : super(key: key);
+class FoodDetailsPage extends StatefulWidget {
+  const FoodDetailsPage({
+    Key? key,
+    required this.foodName,
+    required this.imageUrl,
+    required this.description,
+    required this.cal,
+    required this.price,
+    required this.llave,
+  }) : super(key: key);
+  final String foodName;
+  final String imageUrl;
+  final String description;
+  final String cal;
+  final String price;
+  final String llave;
 
+  @override
+  State<FoodDetailsPage> createState() => _FoodDetailsPageState();
+}
+
+class _FoodDetailsPageState extends State<FoodDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: SvgPicture.asset(AppIcons.back),
-        ),
-        leadingWidth: 48,
+        backgroundColor: const Color.fromRGBO(29, 164, 180, 0.996),
+        automaticallyImplyLeading: true, // Muestra el botón de retroceso
         title: Text(
-          'Food Details',
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
+          widget.foodName,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 252, 252, 252),
+              ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(AppIcons.heart),
-          )
-        ],
       ),
       body: Column(
-        children: const [
-          ImageSliderFood(),
-          FoodMetaData(),
-          FoodDescription(),
-          FoodCategories(),
-          Divider(height: AppDefaults.margin * 2),
-          FoodData(),
-          Spacer(),
-          PlaceOrderButton(),
+        children: [
+          //ImageSliderFood(),
+          Image.network(
+            widget.imageUrl,
+          ),
+
+          FoodMetaData(
+              foodName: widget.foodName,
+              price: widget.price,
+              llave: widget.llave),
+          FoodDescription(description: widget.description),
+          //FoodCategories(),
+          //Divider(height: AppDefaults.margin * 2),
+          //FoodData(),
+          //Spacer(),
+          //PlaceOrderButton(),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rive_animation/core/components/item_tile_horizontal_food.dart';
 
 import '../../../core/components/item_tile_horizontal.dart';
 import '../../../core/constants/constants.dart';
@@ -37,29 +38,60 @@ class HomeSuggestionSection extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: StreamBuilder(
-            stream: FirebaseDatabase.instance
-                .reference()
-                .child('Popular_Dishes')
-                .onValue,
+            stream:
+                FirebaseDatabase.instance.reference().child('Comidas').onValue,
             builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData && snapshot.data != null) {
                 // Obtiene una lista de Mapas de los datos de Firebase
                 List<Map<dynamic, dynamic>> foodsList = [];
                 Map<dynamic, dynamic> foods = snapshot.data!.snapshot.value;
-                foods.forEach((key, value) {
-                  foodsList.add(value);
-                });
+                if (foods != null) {
+                  int count = 0; // Contador para limitar a cinco elementos
+                  foods.forEach((key, value) {
+                    if (value is Map) {
+                      value.forEach((innerKey, innerValue) {
+                        if (count < 5) {
+                          // Verifica si el valor es un mapa para acceder a los subgrupos
+                          if (innerValue is Map) {
+                            // Accede a los subgrupos y atributos que deseas
+                            String foodName = innerValue['name'] ?? '';
+                            String description =
+                                innerValue['descripcion'] ?? '';
+                            String imageUrl = innerValue['imageUrl'] ?? '';
+                            String price = innerValue['precio'] ?? '';
+                            String llave = innerValue['llave'] ?? '';
+
+                            // Crea un mapa con los datos que necesitas
+                            Map<String, dynamic> foodData = {
+                              'foodName': foodName,
+                              'description': description,
+                              'imageUrl': imageUrl,
+                              'price': price,
+                              'cal': price,
+                              'llave': llave,
+                              // Usa el valor de 'precio' para 'cal'
+                            };
+
+                            foodsList.add(foodData);
+                            count++;
+                          }
+                        }
+                      });
+                    }
+                  });
+                }
 
                 // Crea una lista de ItemTileHorizontal a partir de los datos de Firebase
-                List<ItemTileHorizontal> itemTiles = [];
+                List<ItemTileHorizontalFood> itemTiles = [];
                 for (var food in foodsList) {
                   itemTiles.add(
-                    ItemTileHorizontal(
-                      foodName: food['name'],
+                    ItemTileHorizontalFood(
+                      foodName: food['foodName'],
                       description: food['description'],
                       imageUrl: food['imageUrl'],
                       price: food['price'],
                       cal: food['cal'],
+                      llave: food['llave'],
                     ),
                   );
                 }

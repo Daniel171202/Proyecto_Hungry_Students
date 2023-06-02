@@ -6,7 +6,7 @@ import '../constants/constants.dart';
 import 'network_image.dart';
 
 class ItemTileHorizontal extends StatelessWidget {
-  const ItemTileHorizontal(  {
+  const ItemTileHorizontal({
     Key? key,
     required this.foodName,
     required this.imageUrl,
@@ -25,10 +25,12 @@ class ItemTileHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: () {/*
+        onTap: () {
+          /*
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const FoodDetailsPage()));
-        */},
+        */
+        },
         borderRadius: AppDefaults.borderRadius,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -46,6 +48,7 @@ class ItemTileHorizontal extends StatelessWidget {
                   foodName,
                   style: Theme.of(context).textTheme.headline6,
                 ),
+                /*
                 const SizedBox(height: 8),
                 Text(
                   description,
@@ -56,16 +59,20 @@ class ItemTileHorizontal extends StatelessWidget {
                   children: [
                     const Text('Precio'),
                     const Spacer(),
-                    Text('$price Bs',style: const TextStyle(fontWeight: FontWeight.bold,),),
+                    Text(
+                      '$price Bs',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const Spacer(),
                     /*
                     const Text('Calificación:'),
                     const Spacer(),
                     Text('$cal/5',style: const TextStyle(fontWeight: FontWeight.bold,),),
                     const Spacer(),*/
-                    
                   ],
-                )
+                )*/
               ],
             ),
           ),

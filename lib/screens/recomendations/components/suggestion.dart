@@ -20,7 +20,7 @@ class HomeSuggestionSectionRestaurants extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Recomendaciones ',
+                'TOP Recomendaciones ',
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
@@ -39,7 +39,10 @@ class HomeSuggestionSectionRestaurants extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: StreamBuilder(
-            stream: FirebaseDatabase.instance.reference().child('Recommended_Restaurants').onValue,
+            stream: FirebaseDatabase.instance
+                .reference()
+                .child('Recommended_Restaurants')
+                .onValue,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 // Obtiene una lista de Mapas de los datos de Firebase

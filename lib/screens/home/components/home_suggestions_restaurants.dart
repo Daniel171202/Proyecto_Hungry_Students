@@ -37,14 +37,22 @@ class HomeSuggestionSectionRestaurants extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: StreamBuilder(
-            stream: FirebaseDatabase.instance.reference().child('Popular_Restaurants').onValue,
+            stream: FirebaseDatabase.instance
+                .ref()
+                .child('Restaurantes')
+                .limitToFirst(5) // Limita los datos a 5
+                .onValue,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 // Obtiene una lista de Mapas de los datos de Firebase
                 List<Map<dynamic, dynamic>> foodsList = [];
                 Map<dynamic, dynamic> foods = snapshot.data!.snapshot.value;
                 foods.forEach((key, value) {
-                  foodsList.add(value);
+                  print(value);
+                  foodsList.add({
+                    ...value,
+                    'llave': key.toString(), // Agrega la llave como atributo
+                  });
                 });
 
                 // Crea una lista de ItemTileHorizontal a partir de los datos de Firebase
@@ -53,9 +61,13 @@ class HomeSuggestionSectionRestaurants extends StatelessWidget {
                   itemTiles.add(
                     ItemTileHorizontal(
                       foodName: food['name'],
-                      description: food['description'],
+                      description: food['descripcion'],
                       imageUrl: food['imageUrl'],
-                      cal: food['cal'],
+                      cal: food['calificacion'],
+                      dire: food['direccion'],
+                      hop: food['hopen'],
+                      hcl: food['hclose'],
+                      llave: food['llave'],
                     ),
                   );
                 }
@@ -64,9 +76,9 @@ class HomeSuggestionSectionRestaurants extends StatelessWidget {
                   children: itemTiles,
                 );
               } else if (snapshot.hasError) {
-                return Text('Error al obtener datos de Firebase');
+                return const Text('Error al obtener datos de Firebase');
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             },
           ),

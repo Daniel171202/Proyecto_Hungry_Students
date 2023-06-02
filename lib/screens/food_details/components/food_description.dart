@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/constants.dart';
 
-class FoodDescription extends StatelessWidget {
+class FoodDescription extends StatefulWidget {
   const FoodDescription({
     Key? key,
+    required this.description,
   }) : super(key: key);
+  final String description;
+  @override
+  State<FoodDescription> createState() => _FoodDescriptionState();
+}
 
+class _FoodDescriptionState extends State<FoodDescription> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +21,7 @@ class FoodDescription extends StatelessWidget {
         vertical: AppDefaults.padding / 2,
       ),
       child: Text(
-        'Tamagoyaki is a type of Japanese omelette, which is made by rolling together several layers of cooked egg.These are often prepared in a rectangular omelette pan called a makiyakinabe or tamagoyakiki.',
+        widget.description,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.grey,
               height: 1.5,

@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../screens/food_details/food_details.dart';
 
-import '../../screens/home/components/restaurantes_page.dart';
 import '../constants/constants.dart';
 import 'network_image.dart';
 
-class ItemTileHorizontal extends StatelessWidget {
-  const ItemTileHorizontal({
+class ItemTileHorizontalFood extends StatelessWidget {
+  const ItemTileHorizontalFood({
     Key? key,
     required this.foodName,
     required this.imageUrl,
     required this.description,
     required this.cal,
-    required this.dire,
-    required this.hop,
-    required this.hcl,
+    required this.price,
     required this.llave,
   }) : super(key: key);
 
@@ -23,9 +20,7 @@ class ItemTileHorizontal extends StatelessWidget {
   final String imageUrl;
   final String description;
   final String cal;
-  final String dire;
-  final String hop;
-  final String hcl;
+  final String price;
   final String llave;
 
   @override
@@ -34,20 +29,15 @@ class ItemTileHorizontal extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RestaurantesPage(
-                nombre: foodName,
-                imageUrl: imageUrl,
-                descripcion: description,
-                direccion: dire,
-                calificacion: cal,
-                hop: hop,
-                hcl: hcl,
-                llave: llave,
-              ),
-            ),
-          );
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FoodDetailsPage(
+                      foodName: foodName,
+                      imageUrl: imageUrl,
+                      description: description,
+                      cal: cal,
+                      price: price,
+                      llave: llave)));
         },
         borderRadius: AppDefaults.borderRadius,
         child: Padding(
@@ -66,23 +56,29 @@ class ItemTileHorizontal extends StatelessWidget {
                   foodName,
                   style: Theme.of(context).textTheme.headline6,
                 ),
+                /*
                 const SizedBox(height: 8),
                 Text(
                   description,
                   style: Theme.of(context).textTheme.caption,
-                ),
+                ),*/
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    const Text('Calificación:'),
+                    const Text('Precio'),
                     const Spacer(),
                     Text(
-                      '$cal/5',
+                      '$price Bs',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const Spacer(),
+                    /*
+                    const Text('Calificación:'),
+                    const Spacer(),
+                    Text('$cal/5',style: const TextStyle(fontWeight: FontWeight.bold,),),
+                    const Spacer(),*/
                   ],
                 )
               ],

@@ -31,8 +31,8 @@ class _HomePageState extends State<HomePage> {
   late String direccion = "";
   late String urlimagen = "";
   late String correo = "";
-  late String hope = "";
-  late String hclo = "";
+  late String hop = "";
+  late String hcl = "";
 
   @override
   void initState() {
@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
         direccion = snapshot.child('direccion').value.toString();
         urlimagen = snapshot.child('imageUrl').value.toString();
         correo = snapshot.child('correo').value.toString();
-        hope = snapshot.child('hopen').value.toString();
-        hclo = snapshot.child('hclose').value.toString();
+        hop = snapshot.child('hopen').value.toString();
+        hcl = snapshot.child('hclose').value.toString();
       });
     } else {
       setState(() {
@@ -60,15 +60,20 @@ class _HomePageState extends State<HomePage> {
         direccion = "Añade direcion";
         urlimagen = "Añade tu enlace";
         correo = "Añade correo";
-        hope = "Añade hora de apertura";
-        hclo = "Añade hora de cierre";
+        hop = "Añade hora de apertura";
+        hcl = "Añade hora de cerrado";
       });
     }
   }
 
-  void actualizarDatos(String nameController, String direcController,
-      String descController, String urlController, String correoController,
-      String hopenController, String hcloseController) {
+  void actualizarDatos(
+      String nameController,
+      String direcController,
+      String descController,
+      String urlController,
+      String correoController,
+      String hopController,
+      String hclController) {
     // Obtén una referencia a la entidad que deseas actualizar
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref =
@@ -81,8 +86,9 @@ class _HomePageState extends State<HomePage> {
       'direccion': direcController,
       'imageUrl': urlController,
       'correo': correoController,
-      'hopen': hopenController,
-      'hclose': hcloseController,
+      'hopen': hopController,
+      'hclose': hclController,
+      'llave': user.uid,
     };
 
     // Actualiza solo los atributos especificados en el mapa
@@ -107,254 +113,254 @@ class _HomePageState extends State<HomePage> {
         TextEditingController(text: urlimagen);
     TextEditingController correoController =
         TextEditingController(text: correo);
-    TextEditingController hopenController =
-        TextEditingController(text: hope);
-    TextEditingController hcloseController =
-        TextEditingController(text: hclo);
+    TextEditingController hopController = TextEditingController(text: hop);
+    TextEditingController hclController = TextEditingController(text: hcl);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(height: 100),
-          const Text(
-            "       Información Restaurante",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 255, 64, 77),
-              fontSize: 25,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 100),
+            const Text(
+              "       Información Restaurante",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 255, 64, 77),
+                fontSize: 25,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Nombre:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Nombre:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: nameController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.restaurant,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: nameController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.restaurant,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Correo:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Correo:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: correoController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.email_rounded,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: correoController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.email_rounded,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Descripcion:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Descripcion:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: descController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.article,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: descController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.article,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Dirección:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Dirección:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: direcController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.store,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: direcController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.store,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Imagen Restaurante url:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Hora de apertura:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: urlController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.image,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: hopController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.av_timer_sharp,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Hora de apertura:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Hora de cierre:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: hopenController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.timelapse_outlined,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: hclController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.lock_clock,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Hora de cierre:",
-            style: TextStyle(
-              color: Colors.black54,
+            const SizedBox(height: 10),
+            const Text(
+              "Imagen Restaurante url:",
+              style: TextStyle(
+                color: Colors.black54,
+              ),
             ),
-          ),
-          TextFormField(
-            controller: hcloseController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.timelapse_outlined,
-                  color: Color.fromRGBO(255, 64, 64, 1),
+            TextFormField(
+              controller: urlController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.image,
+                    color: Color.fromRGBO(255, 64, 64, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton.icon(
-            onPressed: () {
-              actualizarDatos(
-                  nameController.text,
-                  direcController.text,
-                  descController.text,
-                  urlController.text,
-                  correoController.text,
-                  hopenController.text,
-                  hcloseController.text);
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: () {
+                actualizarDatos(
+                    nameController.text,
+                    direcController.text,
+                    descController.text,
+                    urlController.text,
+                    correoController.text,
+                    hopController.text,
+                    hclController.text);
 
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return const AlertDialog(
-                    backgroundColor: Color.fromARGB(248, 255, 75, 90),
-                    title: Center(
-                      child: Text(
-                        'Se actualizaron tus datos correctamente',
-                        style: TextStyle(color: Colors.white),
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      backgroundColor: Color.fromARGB(248, 255, 75, 90),
+                      title: Center(
+                        child: Text(
+                          'Se actualizaron tus datos correctamente',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-              Future.delayed(const Duration(milliseconds: 1036), () {
-                Navigator.pop(context);
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(255, 64, 64, 1),
-              minimumSize: const Size(double.infinity, 56),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                  bottomRight: Radius.circular(25),
-                  bottomLeft: Radius.circular(25),
+                    );
+                  },
+                );
+                Future.delayed(const Duration(milliseconds: 1036), () {
+                  Navigator.pop(context);
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(255, 64, 64, 1),
+                minimumSize: const Size(double.infinity, 56),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                  ),
                 ),
               ),
+              icon: const Icon(
+                CupertinoIcons.arrow_right,
+                color: Color.fromARGB(255, 255, 252, 253),
+              ),
+              label: const Text(
+                "Actualizar",
+                style: TextStyle(fontSize: 16),
+              ),
             ),
-            icon: const Icon(
-              CupertinoIcons.arrow_right,
-              color: Color.fromARGB(255, 255, 252, 253),
-            ),
-            label: const Text(
-              "Actualizar",
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

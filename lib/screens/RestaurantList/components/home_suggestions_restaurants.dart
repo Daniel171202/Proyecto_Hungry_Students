@@ -16,17 +16,16 @@ class RestaurantProducts extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: StreamBuilder(
-            stream: FirebaseDatabase.instance
-                .reference()
-                .child('Restaurantes')
-                .onValue,
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
+            stream: FirebaseDatabase.instance // Configuración del flujo de datos desde Firebase
+              .reference()
+              .child('Restaurantes')
+              .onValue, // Escucha los cambios en "Restaurantes"
+            builder: (context, AsyncSnapshot snapshot) { // Función de construcción del widget basado en el snapshot del flujo de datos
+              if (snapshot.hasData) { // Comprueba si hay datos en el snapshot
                 // Obtiene una lista de Mapas de los datos de Firebase
                 List<Map<dynamic, dynamic>> foodsList = [];
                 Map<dynamic, dynamic> foods = snapshot.data!.snapshot.value;
                 foods.forEach((key, value) {
-                  print(value);
                   foodsList.add({
                     ...value,
                     'llave': key.toString(), // Agrega la llave como atributo
@@ -36,6 +35,7 @@ class RestaurantProducts extends StatelessWidget {
                 // Crea una lista de ItemTileVertical a partir de los datos de Firebase
                 List<ItemTileVertical> itemTiles = [];
                 for (var food in foodsList) {
+                  print("ola:$food");
                   itemTiles.add(
                     ItemTileVertical(
                       foodName: food['name'],
@@ -45,21 +45,24 @@ class RestaurantProducts extends StatelessWidget {
                       dire: food['direccion'],
                       hop: food['hopen'],
                       hcl: food['hclose'],
+                      reslat: food['rlat'],
+                      reslong: food['rlong'],
                       llave: food['llave'], // Pasa la llave como atributo
                     ),
                   );
                 }
 
                 return Column(
-                  children: itemTiles,
+                  children: itemTiles, // Muestra la lista de ItemTileVertical en una columna
                 );
-              } else if (snapshot.hasError) {
-                return const Text('Error al obtener datos de Firebase');
+              } else if (snapshot.hasError) { // Comprueba si hay un error en el snapshot
+                return const Text('Error al obtener datos de Firebase'); // Muestra un mensaje de error
               } else {
-                return CircularProgressIndicator();
+                return CircularProgressIndicator(); // Muestra un indicador de carga mientras se obtienen los datos
               }
             },
           ),
+
         ),
       ],
     );

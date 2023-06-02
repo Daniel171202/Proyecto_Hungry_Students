@@ -16,6 +16,8 @@ class ItemTileVertical extends StatelessWidget {
     required this.dire,
     required this.hop,
     required this.hcl,
+    required this.reslat,
+    required this.reslong,
     required this.llave,
   }) : super(key: key);
 
@@ -26,6 +28,8 @@ class ItemTileVertical extends StatelessWidget {
   final String dire;
   final String hop;
   final String hcl;
+  final String reslat;
+  final String reslong;
   final String llave;
 
   @override
@@ -44,6 +48,8 @@ class ItemTileVertical extends StatelessWidget {
                 calificacion: cal,
                 hop: hop,
                 hcl: hcl,
+                reslat: double.parse(reslat),
+                reslong:double.parse(reslong),
                 llave: llave,
               ),
             ),

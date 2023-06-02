@@ -50,7 +50,6 @@ class _FoodMetaDataState extends State<FoodMetaData> {
             ],
           ),
           const SizedBox(height: 16),
-
           /// Resturant Details
           Row(
             children: [
@@ -101,6 +100,8 @@ class _ResturantDetailsState extends State<ResturantDetails> {
   late String hcl = "";
   late String name = "";
   late String cal = "";
+  late String reslat = "";
+  late String reslong = "";
 
   @override
   void initState() {
@@ -124,6 +125,8 @@ class _ResturantDetailsState extends State<ResturantDetails> {
         hcl = snapshot.child('hclose').value.toString();
         name = snapshot.child('name').value.toString();
         cal = snapshot.child('calificacion').value.toString();
+        reslat = snapshot.child('rlat').value.toString();
+        reslong = snapshot.child('rlong').value.toString();
       });
     }
   }
@@ -165,6 +168,8 @@ class _ResturantDetailsState extends State<ResturantDetails> {
                           calificacion: cal,
                           hop: hop,
                           hcl: hcl,
+                          reslat: double.parse(reslat),
+                          reslong:double.parse(reslong),
                           llave: widget.llave),
                     ),
                   );

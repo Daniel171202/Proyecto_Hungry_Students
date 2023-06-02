@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animation/screens/RestaurantList/components/food_info.dart';
+import 'package:rive_animation/screens/RestaurantList/mapa.dart';
 import 'package:rive_animation/screens/entryPoint/entry_point.dart';
 import 'package:rive_animation/screens/home/components/scores.dart';
 
@@ -11,6 +12,8 @@ class RestaurantesPage extends StatefulWidget {
   final String calificacion;
   final String hop;
   final String hcl;
+  final double reslat;
+  final double reslong;
   final String llave;
 
   const RestaurantesPage({
@@ -22,6 +25,8 @@ class RestaurantesPage extends StatefulWidget {
     required this.calificacion,
     required this.hop,
     required this.hcl,
+    required this.reslat,
+    required this.reslong,
     required this.llave,
   }) : super(key: key);
 
@@ -143,7 +148,7 @@ class _RestaurantesPageState extends State<RestaurantesPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 9),
                   Container(
                     alignment: Alignment.center,
                     child: ElevatedButton.icon(
@@ -173,6 +178,42 @@ class _RestaurantesPageState extends State<RestaurantesPage> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromARGB(178, 218, 35, 10),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 9),
+                  Container(
+                    alignment: Alignment.center,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Mapa(
+                              nombre: widget.nombre, 
+                              desc: widget.descripcion, 
+                              reslat: widget.reslat, 
+                              reslong: widget.reslong
+                              )
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.location_on_outlined,
+                        size: 40,
+                        color: Color.fromARGB(255, 255, 253, 253),
+                      ),
+                      label: const Text(
+                        "VER EN EL MAPA",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 252, 250, 250),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(178, 0,135,159),
                         ),
                       ),
                     ),

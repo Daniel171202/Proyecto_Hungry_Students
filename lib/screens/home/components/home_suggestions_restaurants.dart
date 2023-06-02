@@ -67,6 +67,8 @@ class HomeSuggestionSectionRestaurants extends StatelessWidget {
                       dire: food['direccion'],
                       hop: food['hopen'],
                       hcl: food['hclose'],
+                      reslat: food['rlat'],
+                      reslong: food['rlong'],
                       llave: food['llave'],
                     ),
                   );
